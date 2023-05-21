@@ -19,6 +19,7 @@ dependencies {
 	implementation 'com.h2database:h2:2.1.214'
 	implementation 'org.hibernate.orm:hibernate-core:6.2.2.Final'
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf:3.0.6' // шаблонизатор, для динамичных данных разметки, иначе static
+	implementation 'org.apache.commons:commons-lang3:3.12.0' //
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	compileOnly 'org.projectlombok:lombok:1.18.24'
 	annotationProcessor 'org.projectlombok:lombok:1.18.24'

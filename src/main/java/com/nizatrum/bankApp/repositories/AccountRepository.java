@@ -1,11 +1,11 @@
 package com.nizatrum.bankApp.repositories;
 
+import com.nizatrum.bankApp.models.Account;
 import com.nizatrum.bankApp.models.Role;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
 @Repository
-public interface RoleRepository extends JpaRepository<Role, Long> {
-    // findBySystemName(String value) - можно сказать переопределяем findById, ищет вхождение в таблице в поле systemName
-    Role findBySystemName(String systemName);
+public interface AccountRepository extends JpaRepository<Account, Long> {
+    Account findTopByOrderByIdDesc();
 }

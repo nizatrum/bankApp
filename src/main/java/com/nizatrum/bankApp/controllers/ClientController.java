@@ -28,8 +28,9 @@ public class ClientController {
     public ModelAndView create(@ModelAttribute Client client, RedirectAttributes model) {
         if (clientService.createClient(client)) {
             model.addFlashAttribute("msg", "Пользователь успешно создан");
-        } else {
-            model.addFlashAttribute("msg", "Не удалось создать пользователя");
+        }
+        else {
+            model.addFlashAttribute("msg", "Пользователь не может быть создан, ошибки заполнения");
         }
         return new ModelAndView("redirect:/client");
     }
@@ -40,7 +41,7 @@ public class ClientController {
         if (client.isPresent()) {
             model.addFlashAttribute("client", client.get());
         } else {
-            model.addFlashAttribute("msg", "Не удалось создать пользователя");
+            model.addFlashAttribute("msg", "Пользователь не найден");
         }
         return new ModelAndView("redirect:/client");
     }

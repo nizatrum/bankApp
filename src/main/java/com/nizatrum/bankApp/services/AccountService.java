@@ -1,7 +1,9 @@
 package com.nizatrum.bankApp.services;
 
+import com.nizatrum.bankApp.models.Account;
 import com.nizatrum.bankApp.models.Client;
 import com.nizatrum.bankApp.models.Role;
+import com.nizatrum.bankApp.repositories.AccountRepository;
 import com.nizatrum.bankApp.repositories.ClientRepository;
 import com.nizatrum.bankApp.repositories.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -12,18 +14,21 @@ import java.util.Optional;
 import static com.nizatrum.bankApp.services.validators.ClientValidator.clientValidator;
 
 
-@Service // для того чтобы spring понимал, что в данном классе у нас содержится методы для бизнес логики
-public class ClientService {
-    @Autowired //@Autowired - Аннотация позволяет автоматически установить значение поля.
-    private ClientRepository clientRepository;
+@Service
+public class AccountService {
     @Autowired
-    private RoleRepository roleRepository;
-
-    public boolean createClient(Client client) {
-        if (clientValidator(client)) {
-            Role roleFromNewClient = roleRepository.findBySystemName("USER");
-            client.setRole(roleFromNewClient);
-            clientRepository.save(client);
+    private AccountRepository accountRepository;
+    @Autowired
+    private ClientRepository clientRepository;
+    public boolean createAccount(Long clientId) {
+        Account account = new Account();
+        account.setBalance(0);
+        Optional<Client> clientForEdit = Optional.of(clientRepository.getById(clientId));
+        if (clientForEdit.isPresent()) {
+            account.setName("Счет " + clientForEdit.get().getName());
+            accountRepository.save(account);
+            clientForEdit.get().getAccounts().add(account);
+            clientRepository.save(clientForEdit.get());
             return true;
         }
         return false;
