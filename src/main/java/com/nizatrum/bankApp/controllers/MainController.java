@@ -24,10 +24,8 @@ public class MainController {
     // отправить параметр "name=Тимур" и как в результате мы можем принять данный параметр в методе,
     // помеченным аннотацией для этого адреса с помощью @RequestParam
     // наименование принимаемого параметра в методе и передаваемого параметра в адресе должно совпадать!
-    /*
-    @GetMapping("/sayHelloWithParam")
-    public String sayHelloWithParam(@RequestParam String name) {
-        return "Hello " + name;
+    @GetMapping("/account")
+    public String account() {
+        return "account/index";
     }
-    */
 }

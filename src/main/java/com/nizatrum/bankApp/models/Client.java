@@ -11,6 +11,7 @@ import java.util.List;
 @Entity //сущность нужна, чтобы в том числе по ее образу и подобию (класса Client) создать в БД соответствующую таблицу
 @Setter
 @Getter
+@ToString
  //с помощью библиотеки lombok мы спрятали через аннотации наши геттеры, сеттеры и переопределенный метод toString.
 // Также может добавить аналогично конструктор с параметрами и без
 public class Client {
@@ -24,7 +25,7 @@ public class Client {
     private String password;
     @ManyToOne // определяем отношения таблиц, в данном случае primary key Role, будет вторичным ключем в таблице Client
     private Role role;
-    @ManyToMany
+    @ManyToMany(fetch = FetchType.EAGER)
     private List<Account> accounts;
 
 }

@@ -9,6 +9,7 @@ import com.nizatrum.bankApp.repositories.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.List;
 import java.util.Optional;
 
 import static com.nizatrum.bankApp.services.validators.ClientValidator.clientValidator;
@@ -23,19 +24,26 @@ public class AccountService {
     public boolean createAccount(Long clientId) {
         Account account = new Account();
         account.setBalance(0);
-        Optional<Client> clientForEdit = Optional.of(clientRepository.getById(clientId));
+
+        Optional<Client> clientForEdit = clientRepository.findById(clientId);
         if (clientForEdit.isPresent()) {
             account.setName("Счет " + clientForEdit.get().getName());
             accountRepository.save(account);
-            clientForEdit.get().getAccounts().add(account);
+            clientForEdit.get().getAccounts().add(accountRepository.findTopByOrderByIdDesc());
             clientRepository.save(clientForEdit.get());
             return true;
         }
         return false;
     }
-    public Optional<Client> getClient(Long id) {
-        return clientRepository.findById(id);
+    public Optional<Account> getAccount(Long id) {
+        return accountRepository.findById(id);
     }
+
+    public List<Account> getAccounts(Long id) {
+        Client client = clientRepository.findById(id).get();
+        return client.getAccounts();
+    }
+
     public boolean updateClient(Client client) {
         Client clientForChange = clientRepository.findById(client.getId()).get();
         clientForChange.setName(client.getName());
