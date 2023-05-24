@@ -15,6 +15,11 @@ public class MainController {
         return "index";
     } //возвращаем страницу html по адресу "resources/templates/index.html"
 
+    @GetMapping("/login")
+    public String login() {
+        return "login";
+    }
+
     @GetMapping("/client")
     public String client() {
         return "client/index";

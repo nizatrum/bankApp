@@ -5,8 +5,10 @@ import com.nizatrum.bankApp.models.Role;
 import com.nizatrum.bankApp.repositories.ClientRepository;
 import com.nizatrum.bankApp.repositories.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.Optional;
 
 import static com.nizatrum.bankApp.services.validators.ClientValidator.clientValidator;
@@ -18,11 +20,14 @@ public class ClientService {
     private ClientRepository clientRepository;
     @Autowired
     private RoleRepository roleRepository;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
 
     public boolean createClient(Client client) {
         if (clientValidator(client)) {
-            Role roleFromNewClient = roleRepository.findBySystemName("USER");
-            client.setRole(roleFromNewClient);
+            client.setRole(roleRepository.findBySystemName("USER"));
+            client.setAccounts(new ArrayList<>());
+            client.setPassword(passwordEncoder.encode(client.getPassword()));
             clientRepository.save(client);
             return true;
         }
