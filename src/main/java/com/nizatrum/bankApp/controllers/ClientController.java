@@ -37,9 +37,9 @@ public class ClientController {
 
     @GetMapping("/get")
     public ModelAndView get(@RequestParam Long id, RedirectAttributes model) {
-        Optional<Client> client = clientService.getClient(id);
-        if (client.isPresent()) {
-            model.addFlashAttribute("client", client.get());
+        Optional<Client> user = clientService.getClient(id);
+        if (user.isPresent()) {
+            model.addFlashAttribute("client", user.get());
         } else {
             model.addFlashAttribute("msg", "Пользователь не найден");
         }

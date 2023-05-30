@@ -7,16 +7,19 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import java.util.logging.Logger;
+
 @Service
-public class JpaUserDetailsService implements UserDetailsService {
+public class JpaClientDetailsService implements UserDetailsService {
     private final ClientRepository clientRepository;
 
-    public JpaUserDetailsService(ClientRepository clientRepository) {
+    public JpaClientDetailsService(ClientRepository clientRepository) {
         this.clientRepository = clientRepository;
     }
 
     @Override
     public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
+        System.out.println("invoke(loadUserByUsername)");
         return clientRepository
                 .findByUsername(username)
                 .map(SecurityClient::new)

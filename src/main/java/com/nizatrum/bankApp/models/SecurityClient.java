@@ -7,33 +7,30 @@ import org.springframework.security.core.userdetails.UserDetails;
 import java.util.Arrays;
 import java.util.Collection;
 
-public class SecurityUser implements UserDetails {
-
-    private User user;
-
-    public SecurityUser(User user) {
-        this.user = user;
+public class SecurityClient implements UserDetails {
+    private Client client;
+    public SecurityClient(Client client) {
+        this.client = client;
     }
     @Override
     public String getUsername() {
-        return user.getUsername();
+        return client.getUsername();
     }
 
     @Override
     public String getPassword() {
-        return user.getPassword();
+        return client.getPassword();
     }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return Arrays.stream(user
+        System.out.println("invoke(getAuthorities)");
+        return Arrays.stream(client
                         .getRoles()
-                        .toString()
                         .split(","))
                 .map(SimpleGrantedAuthority::new)
                 .toList();
     }
-
     @Override
     public boolean isAccountNonExpired() {
         return true;

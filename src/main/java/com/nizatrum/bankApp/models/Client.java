@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.springframework.security.core.userdetails.User;
 
 import java.util.List;
 
@@ -13,9 +14,9 @@ import java.util.List;
 @ToString
  //с помощью библиотеки lombok мы спрятали через аннотации наши геттеры, сеттеры и переопределенный метод toString.
 // Также может добавить аналогично конструктор с параметрами и без
-public class User {
+public class Client {
     @Id //аннотация для того чтобы id поля Client сопоставлялось id этой сущности в БД ()
-    @GeneratedValue(strategy = GenerationType.IDENTITY) //аннотация для определения, как мы будет нумеровать наши сущности
+    @GeneratedValue//аннотация для определения, как мы будет нумеровать наши сущности
     // в БД, в данном случае инкремент по порядку (1,2,3 ...n)
     private Long id;
     private String email;
@@ -24,8 +25,17 @@ public class User {
     private String patronymic;
     private String username;
     private String password;
-    @ManyToOne // определяем отношения таблиц, в данном случае primary key Role, будет вторичным ключем в таблице Client
-    private Role roles;
+    private String roles;
     @ManyToMany(fetch = FetchType.EAGER)
     private List<Account> accounts;
+    public Client() { }
+    public Client(String email, String name, String surname, String patronymic, String username, String password, String roles) {
+        this.email = email;
+        this.name = name;
+        this.surname = surname;
+        this.patronymic = patronymic;
+        this.username = username;
+        this.password = password;
+        this.roles = roles;
+    }
 }
