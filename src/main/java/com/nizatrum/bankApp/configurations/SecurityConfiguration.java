@@ -1,7 +1,10 @@
 package com.nizatrum.bankApp.configurations;
 
+import com.nizatrum.bankApp.services.JpaClientDetailsService;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.security.config.Customizer;
+import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
@@ -10,34 +13,28 @@ import org.springframework.security.web.SecurityFilterChain;
 
 @Configuration
 @EnableWebSecurity
+@EnableMethodSecurity
 public class SecurityConfiguration {
-
-
-    @Bean
-    public PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
+    private final JpaClientDetailsService jpaClientDetailsService;
+    public SecurityConfiguration(JpaClientDetailsService jpaClientDetailsService) {
+        this.jpaClientDetailsService = jpaClientDetailsService;
     }
 
+    @Bean
+    SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
+        return http
+                .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/").permitAll()
+                        .anyRequest().authenticated())
+                .userDetailsService(jpaClientDetailsService)
+                .headers(headers -> headers.frameOptions().sameOrigin())
+                .httpBasic(Customizer.withDefaults())
+                .build();
+    }
 
-    @Bean // объект (класса spring) в контексте фраемворка spring
-    // который создается автоматически спрингом
-    // класс данного объекта (бина) мы можем отредактировать, но для этого мы на уэто указываем через аннотацию @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
-        http.cors().and().csrf().disable()
-                .authorizeHttpRequests((requests) -> requests
-                        .requestMatchers("/", "/login").permitAll()
-                        .anyRequest().authenticated()
-                )
-                .formLogin((form) -> form
-                        .loginPage("/login")
-                        .successForwardUrl("/client")
-                        .usernameParameter("email")
-                        .passwordParameter("password")
-                        .permitAll()
-                )
-                .logout((logout) -> logout.permitAll());
-
-        return http.build();
+    @Bean
+    PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
 }

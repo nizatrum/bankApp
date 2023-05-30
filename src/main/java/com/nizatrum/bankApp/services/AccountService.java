@@ -12,8 +12,6 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 
-import static com.nizatrum.bankApp.services.validators.ClientValidator.clientValidator;
-
 
 @Service
 public class AccountService {
