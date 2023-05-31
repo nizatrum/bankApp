@@ -25,7 +25,7 @@ public class SecurityConfiguration {
 
         return http
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/").permitAll()
+                        .requestMatchers("/", "client/**", "/css/**").permitAll()
                         .anyRequest().authenticated())
                 .userDetailsService(jpaClientDetailsService)
                 .headers(headers -> headers.frameOptions().sameOrigin())
