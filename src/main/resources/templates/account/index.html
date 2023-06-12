@@ -31,7 +31,11 @@
         <th><span th:text="${account.id}"></span></th>
         <th><span th:text="${account.name}"></span></th>
         <th><span th:text="${account.balance}"></span></th>
-        <th><a>Снять</a><a>Пополнить</a><a>Перевести</a></th>
+        <th>
+            <button id="withdraw" type="button">Снять</button>
+            <button id="replenish" type="button">Пополнить</button>
+            <button id="transfer" type="button">Перевести</button>
+        </th>
     </tr>
     </tbody>
 </table>

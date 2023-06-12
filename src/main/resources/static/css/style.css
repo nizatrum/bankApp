@@ -1,3 +1,168 @@
+html {
+    width: 100%;
+    height: 100%;
+    font-family: 'Manrope', sans-serif;
+    min-width: 500px;
+}
+
 body {
-    background-color: gray;
+    margin: 0;
+    height: 100%;
+}
+
+header {
+    width: 100%;
+    height: 70px;
+    background-color: #8076ba;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#logo {
+    color: white;
+    font-size: 20pt;
+    margin-left: 20px;
+    cursor: pointer;
+}
+
+div.toMain {
+    margin-right: 20px;
+    font-size: 20pt;
+}
+
+div.toMain a {
+    text-decoration: none;
+    color: white;
+    transition: .5s;
+    font-size: 14pt;
+}
+
+div.toMain a:hover {
+    color: black;
+    transition: .5s;
+}
+main {
+    background-color: #dfdded;
+}
+
+#methods {
+    display: flex;
+    width: 100%;
+    align-items: baseline;
+    padding-top: 20px;
+}
+
+.fragmentForInputs {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+}
+
+.fragmentForInputs form {
+    display: flex;
+    width: 100%;
+    justify-content: center;
+    align-items: center;
+}
+
+form {
+    display: flex;
+    flex-direction: column;
+}
+
+.titleBlock {
+    padding-left: 20px;
+    color: white;
+    font-size: 16pt;
+    background-color: #bfbadc;
+}
+
+input {
+    height: 30px;
+    border: 2px solid #b5b5b5;
+    margin-bottom: 10px;
+    border-radius: 5px;
+}
+#errorMsg {
+    font-size: 12pt;
+    color: gray;
+    padding-left: 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+#infoClient {
+    width: 100%;
+    font-size: 12pt;
+    color: gray;
+    padding-left: 20px;
+    padding-top: 10px;
+    padding-bottom: 10px;
+}
+.dataClient {
+    display: flex;
+    align-items: center;
+    white-space: break-spaces;
+}
+#responseBlock {
+     display: none;
+}
+
+footer {
+    width: 100%;
+    height: 40px;
+    background-color: #7066b1;
+    display: flex;
+    align-items: center;
+    justify-content: end;
+}
+
+input::placeholder {
+     text-align: center;
+}
+
+#contacts {
+    color: white;
+    font-family: 'Manrope', sans-serif;
+    margin-right: 20px;
+}
+#createClientBlock {
+    padding-right: 5px;
+    font-size: 15px;
+    padding-left: 5px;
+    border-radius: 5px;
+    margin-bottom: 8px;
+}
+
+#getClientBlock {
+    padding-right: 5px;
+    font-size: 15px;
+    padding-left: 5px;
+    border-radius: 5px;
+    margin-bottom: 8px;
+}
+
+#updateClientBlock {
+    padding-right: 5px;
+    font-size: 15px;
+    padding-left: 5px;
+    border-radius: 5px;
+    margin-bottom: 8px;
+}
+
+#deleteClientBlock {
+    padding-right: 5px;
+    font-size: 15px;
+    padding-left: 5px;
+    border-radius: 5px;
+    margin-bottom: 8px;
+}
+
+#homeId {
+    margin-right: 340px;
+}
+
+#logoutId {
+    font-size: 14pt;
 }

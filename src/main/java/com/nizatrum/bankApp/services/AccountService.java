@@ -2,10 +2,8 @@ package com.nizatrum.bankApp.services;
 
 import com.nizatrum.bankApp.models.Account;
 import com.nizatrum.bankApp.models.Client;
-import com.nizatrum.bankApp.models.Role;
 import com.nizatrum.bankApp.repositories.AccountRepository;
 import com.nizatrum.bankApp.repositories.ClientRepository;
-import com.nizatrum.bankApp.repositories.RoleRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 

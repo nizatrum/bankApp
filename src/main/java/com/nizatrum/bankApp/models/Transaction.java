@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
+import org.springframework.beans.factory.annotation.Autowired;
 
 import java.util.Date;
 
@@ -12,6 +13,10 @@ import java.util.Date;
 @Getter
 @ToString
 public class Transaction {
+    @Autowired
+    private Account account;
+
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
@@ -21,5 +26,9 @@ public class Transaction {
     private Account recipient;
     private double valueOfPayment;
     private Date dateOfPayment;
+
+    public void withdraw() {
+
+    }
 
 }

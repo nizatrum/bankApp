@@ -25,16 +25,4 @@ public class Client {
     private Role roles;
     @ManyToMany(fetch = FetchType.EAGER)
     private List<Account> accounts;
-
-    public Client() {}
-
-    public Client(String email, String name, String surname, String patronymic, String username, String password, Role roles) {
-        this.email = email;
-        this.name = name;
-        this.surname = surname;
-        this.patronymic = patronymic;
-        this.username = username;
-        this.password = password;
-        this.roles = roles;
-    }
 }

@@ -3,6 +3,7 @@ package com.nizatrum.bankApp.controllers;
 import com.nizatrum.bankApp.models.Client;
 import com.nizatrum.bankApp.services.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -26,22 +27,22 @@ public class ClientController {
 
     @PostMapping("/create")
     public ModelAndView create(@ModelAttribute Client client, RedirectAttributes model) {
-        if (clientService.createClient(client)) {
-            model.addFlashAttribute("msg", "Пользователь успешно создан");
-        }
-        else {
-            model.addFlashAttribute("msg", "Пользователь не может быть создан, ошибки заполнения");
+        try {
+            clientService.createClient(client);
+            model.addFlashAttribute("msg", "Пользователь успешно создан, присвоен id: " + client.getId());
+        } catch (Exception e) {
+            model.addFlashAttribute("msg", "Пользователь не может быть создан, так как " + e.getMessage());
         }
         return new ModelAndView("redirect:/client");
     }
 
     @GetMapping("/get")
     public ModelAndView get(@RequestParam Long id, RedirectAttributes model) {
-        Optional<Client> client = clientService.getClient(id);
-        if (client.isPresent()) {
-            model.addFlashAttribute("client", client.get());
-        } else {
-            model.addFlashAttribute("msg", "Пользователь не найден");
+        try {
+            Client client = clientService.getClient(id);
+            model.addFlashAttribute("client", client);
+        } catch (Exception e) {
+            model.addFlashAttribute("msg", "Клиент с id " + id + " " + e.getMessage());
         }
         return new ModelAndView("redirect:/client");
     }
@@ -59,7 +60,7 @@ public class ClientController {
     @PostMapping("/delete")
     public ModelAndView delete(@RequestParam Long id, RedirectAttributes model) {
         if (clientService.deleteClient(id)) {
-            model.addFlashAttribute("msg", "Пользователь успешно удален");
+            model.addFlashAttribute("msg", "Пользователь c id " + id.toString() + " успешно удален");
         } else {
             model.addFlashAttribute("msg", "Не удалось удалить пользователя");
         }

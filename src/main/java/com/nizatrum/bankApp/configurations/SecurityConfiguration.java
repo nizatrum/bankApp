@@ -19,14 +19,12 @@ public class SecurityConfiguration {
     public SecurityConfiguration(JpaClientDetailsService jpaClientDetailsService) {
         this.jpaClientDetailsService = jpaClientDetailsService;
     }
-
     @Bean
     SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
-        return http
+        return http.csrf().disable().cors().disable()
                 .authorizeHttpRequests(auth -> auth
-                        .requestMatchers("/", "client/**", "/css/**").permitAll()
-                        .anyRequest().authenticated())
+                        .anyRequest().permitAll())
                 .userDetailsService(jpaClientDetailsService)
                 .headers(headers -> headers.frameOptions().sameOrigin())
                 .httpBasic(Customizer.withDefaults())
