@@ -13,9 +13,6 @@ import java.util.Date;
 @Getter
 @ToString
 public class Transaction {
-    @Autowired
-    private Account account;
-
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -27,8 +24,5 @@ public class Transaction {
     private double valueOfPayment;
     private Date dateOfPayment;
 
-    public void withdraw() {
-
-    }
 
 }

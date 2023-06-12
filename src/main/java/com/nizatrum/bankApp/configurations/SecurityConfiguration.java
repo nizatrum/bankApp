@@ -1,9 +1,10 @@
 package com.nizatrum.bankApp.configurations;
 
-import com.nizatrum.bankApp.services.JpaClientDetailsService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.security.config.Customizer;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.config.annotation.authentication.builders.AuthenticationManagerBuilder;
 import org.springframework.security.config.annotation.method.configuration.EnableMethodSecurity;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -15,24 +16,30 @@ import org.springframework.security.web.SecurityFilterChain;
 @EnableWebSecurity
 @EnableMethodSecurity
 public class SecurityConfiguration {
-    private final JpaClientDetailsService jpaClientDetailsService;
-    public SecurityConfiguration(JpaClientDetailsService jpaClientDetailsService) {
-        this.jpaClientDetailsService = jpaClientDetailsService;
+
+    @Autowired
+    private CustomAuthenticationProvider authProvider;
+    @Bean
+    public AuthenticationManager authManager(HttpSecurity http) throws Exception {
+        AuthenticationManagerBuilder authenticationManagerBuilder = http.getSharedObject(AuthenticationManagerBuilder.class);
+        authenticationManagerBuilder.authenticationProvider(authProvider);
+        return authenticationManagerBuilder.build();
+    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder();
     }
     @Bean
-    SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 
         return http.csrf().disable().cors().disable()
                 .authorizeHttpRequests(auth -> auth
-                        .anyRequest().permitAll())
-                .userDetailsService(jpaClientDetailsService)
-                .headers(headers -> headers.frameOptions().sameOrigin())
-                .httpBasic(Customizer.withDefaults())
+                        .anyRequest().hasAuthority("ADMIN"))
+                .formLogin((form) -> form
+                        .usernameParameter("username")
+                        .passwordParameter("password")
+                        .permitAll())
                 .build();
-    }
-
-    @Bean
-    PasswordEncoder passwordEncoder() {
-        return new BCryptPasswordEncoder();
     }
 }

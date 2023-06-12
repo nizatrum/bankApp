@@ -44,7 +44,7 @@ public class ClientService {
         }
         client.setAccounts(new ArrayList<>());
         client.setPassword(passwordEncoder.encode(client.getPassword()));
-        client.setRoles(roleRepository.findBySystemName("ROLE_USER"));
+        client.setRole(roleRepository.findBySystemName("ROLE_USER"));
         clientRepository.save(client);
         log.info("client с id " + client.getId() + " успешно создан");
     }

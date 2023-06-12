@@ -166,3 +166,9 @@ input::placeholder {
 #logoutId {
     font-size: 14pt;
 }
+
+#currentUsername {
+    color: white;
+    font-size: 14pt;
+    cursor: pointer;
+}

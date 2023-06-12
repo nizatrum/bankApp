@@ -14,7 +14,7 @@
         <a id="homeId" href="/">На главную</a>
     </div>
     <div class="toMain">
-        <div id="userInfoId" sec:authentication="username"></div>
+        <div id="currentUsername" th:text="${username}"></div>
         <a id="logoutId" href="/logout">Выход</a>
     </div>
 </header>
