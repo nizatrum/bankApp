@@ -1,15 +1,13 @@
 package com.nizatrum.bankApp.controllers;
 
 
+import com.nizatrum.bankApp.models.Client;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.servlet.ModelAndView;
-import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+
 
 
 @Controller
@@ -20,6 +18,19 @@ public class MainController {
     public String index() {
         return "index";
     } //возвращаем страницу html по адресу "resources/templates/index.html"
+
+    //@PreAuthorize("hasAuthority('USER')")
+    @GetMapping("/userPage")
+    public String userPage() {
+        return "userPage";
+    }
+
+    //@PreAuthorize("hasAuthority('ADMIN')")
+    @GetMapping("/adminPage")
+    public String adminPage(Model model) {
+        model.addAttribute("username", SecurityContextHolder.getContext().getAuthentication().getPrincipal());
+        return "adminPage";
+    }
 
     @GetMapping("/login")
     public String login() {

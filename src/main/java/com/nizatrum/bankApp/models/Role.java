@@ -14,8 +14,8 @@ public class Role implements GrantedAuthority {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    private String systemName; //ADMIN, USER, MODERATOR
-    private String displayName; //Администратор, Пользователь, Оператор, Супервизор
+    private String systemName; //ADMIN, USER
+    private String displayName; //Администратор, Пользователь
 
     @Override
     public String getAuthority() {

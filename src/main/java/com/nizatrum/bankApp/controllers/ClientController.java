@@ -3,8 +3,6 @@ package com.nizatrum.bankApp.controllers;
 import com.nizatrum.bankApp.models.Client;
 import com.nizatrum.bankApp.services.ClientService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.access.prepost.PreAuthorize;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
@@ -67,5 +65,4 @@ public class ClientController {
         }
         return new ModelAndView("redirect:/client");
     }
-
 }

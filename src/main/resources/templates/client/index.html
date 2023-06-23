@@ -3,64 +3,123 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <title>BankApp</title>
-    <link rel="stylesheet" th:href="@{css/style.css}" type="text/css">
-    <link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@300;400;600&display=swap" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <!-- Bootstrap CSS -->
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
+    <link rel="stylesheet" th:href="@{css/style.css}" type="text/css">
 </head>
 <body>
-<header>
-    <div id="logo">НизатрумБанк</div>
-    <div class="toMain">
-        <a id="homeId" href="/">На главную</a>
-    </div>
-    <div class="toMain">
-        <div id="currentUsername" th:text="${username}"></div>
-        <a id="logoutId" href="/logout">Выход</a>
-    </div>
-</header>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="/">НизатБанк</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav">
+                    <li class="nav-item">
+                        <div class="nav-link" th:text="${username}"></div>
+                        <a class="nav-link" href="/logout">Выход</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
 <main>
-    <div class="titleBlock">Блок работы с клиентами</div>
+    <div class="list-group">
+        <div class="list-group-item list-group-item-action active" aria-current="true">
+            Блок работы с клиентами
+        </div>
+    </div>
     <div id="methods">
         <div class="fragmentForInputs" id="create">
             <form method="post" action="/client/create" th:object="${client}">
                 <div id="createClientBlock" class="titleBlock">Создание клиента</div>
-                <input id="email" type="email" name="email" placeholder="Email" required/>
-                <input type="text" name="username" placeholder="Логин" required/>
-                <input type="password" name="password" placeholder="Пароль" required/>
-                <input type="text" name="name" placeholder="Имя" required/>
-                <input type="text" name="surname" placeholder="Фамилия" required/>
-                <input type="text" name="patronymic" placeholder="Отчество"/>
-                <input type="submit" value="Создать"/>
+
+                <div class="form-floating">
+                    <input type="email" class="form-control" id="email" name="email" placeholder="name@example.com" required>
+                    <label for="email">Email</label>
+                </div>
+                <div class="form-floating">
+                    <input type="text" class="form-control" id="username" name="username" placeholder="Username" required>
+                    <label for="username">Логин</label>
+                </div>
+                <div class="form-floating">
+                    <input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
+                    <label for="password">Пароль</label>
+                </div>
+                <div class="form-floating">
+                    <input type="text" class="form-control" id="name" name="name" placeholder="Name" required>
+                    <label for="name">Имя</label>
+                </div>
+                <div class="form-floating">
+                    <input type="text" class="form-control" id="surname" name="surname" placeholder="Surname" required>
+                    <label for="surname">Фамилия</label>
+                </div>
+                <div class="form-floating">
+                    <input type="text" class="form-control" id="patronymic" name="patronymic" placeholder="Patronymic" required>
+                    <label for="patronymic">Отчество</label>
+                </div>
+                <button type="submit" class="btn btn-secondary">Создать</button>
             </form>
         </div>
         <div class="fragmentForInputs" id="get">
             <form method="get" action="/client/get" th:object="${client}">
                 <div id="getClientBlock" class="titleBlock">Получение клиента</div>
-                <input id="inputId" type="number" name="id" placeholder="Id" required/>
-                <input id="getClientButton" type="submit" value="Получить информацию"/>
+
+                <div class="form-floating">
+                    <input id="inputId" type="number" name="id" class="form-control" placeholder="Id" required>
+                    <label for="inputId">Id клиента</label>
+                </div>
+                <button id="getClientButton" type="submit" class="btn btn-secondary">Получить информацию</button>
             </form>
         </div>
         <div class="fragmentForInputs" id="update">
             <form method="post" action="/client/update" th:object="${client}">
                 <div id="updateClientBlock" class="titleBlock">Обновление клиента</div>
-                <input id="updateId" type="number" name="id" placeholder="Id"/>
-                <input id="updateName" type="text" name="name" placeholder="Имя"/>
-                <input id="updateSurname" type="text" name="surname" placeholder="Фамилия"/>
-                <input id="updatePatronymic" type="text" name="patronymic" placeholder="Отчество"/>
-                <input id="updateButton" type="submit" value="Обновить"/>
+                <div class="form-floating">
+                    <input type="text" class="form-control" id="updateId" name="id" placeholder="Name" required>
+                    <label for="updateId">Id клиента</label>
+                </div>
+                <div class="form-floating">
+                    <input type="text" class="form-control" id="updateName" name="name" placeholder="Name" required>
+                    <label for="name">Имя</label>
+                </div>
+                <div class="form-floating">
+                    <input type="text" class="form-control" id="updateSurname" name="surname" placeholder="Surname" required>
+                    <label for="surname">Фамилия</label>
+                </div>
+                <div class="form-floating">
+                    <input type="text" class="form-control" id="updatePatronymic" name="patronymic" placeholder="Patronymic" required>
+                    <label for="patronymic">Отчество</label>
+                </div>
+                <button id="updateButton" type="submit" class="btn btn-secondary">Обновить</button>
             </form>
         </div>
         <div class="fragmentForInputs" id="delete">
             <form method="post" action="/client/delete" th:object="${client}">
                 <div id="deleteClientBlock" class="titleBlock">Удаление клиента</div>
-                <input type="number" name="id" placeholder="Id" required/>
-                <input type="submit" value="Удалить"/>
+
+                <div class="form-floating">
+                    <input type="number" class="form-control" id="deleteClient" name="id" placeholder="Patronymic" required>
+                    <label for="deleteClient">Id клиента</label>
+                </div>
+                <button type="submit" class="btn btn-secondary">Удалить</button>
+
+<!--                <input type="number" name="id" placeholder="Id" required/>-->
+<!--                <input type="submit" value="Удалить"/>-->
             </form>
         </div>
     </div>
 
     <div id="responseBlock">
-        <div class="titleBlock">Блок информативных сообщений</div>
+        <div class="list-group-item list-group-item-action active" aria-current="true">
+            Блок информативных сообщений
+        </div>
         <div id="responseContent">
             <div id="errorMsg" th:text="${msg}"></div>
             <div id="infoClient">
@@ -93,7 +152,9 @@
     </div>
 </main>
 <footer>
-    <div id="contacts">Контактная информация</div>
+    <div id="footer" class="list-group-item list-group-item-action active" aria-current="true">
+        Контактная информация
+    </div>
 </footer>
 </body>
 <script th:src="@{/js/script.js}"></script>

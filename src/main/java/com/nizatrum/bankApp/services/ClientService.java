@@ -75,4 +75,11 @@ public class ClientService {
             return false;
         }
     }
+
+    public Client getClientByEmail(String email) {
+        return clientRepository.findByEmail(email).get();
+    }
+    public Client getClientByUsername(String username) {
+        return clientRepository.findByUsername(username).get();
+    }
 }

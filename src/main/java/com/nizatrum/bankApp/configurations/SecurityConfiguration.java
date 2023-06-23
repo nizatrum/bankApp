@@ -12,6 +12,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
+
 @Configuration
 @EnableWebSecurity
 @EnableMethodSecurity
@@ -19,12 +20,14 @@ public class SecurityConfiguration {
 
     @Autowired
     private CustomAuthenticationProvider authProvider;
+
     @Bean
     public AuthenticationManager authManager(HttpSecurity http) throws Exception {
         AuthenticationManagerBuilder authenticationManagerBuilder = http.getSharedObject(AuthenticationManagerBuilder.class);
         authenticationManagerBuilder.authenticationProvider(authProvider);
         return authenticationManagerBuilder.build();
     }
+
 
     @Bean
     public PasswordEncoder passwordEncoder() {
@@ -35,7 +38,7 @@ public class SecurityConfiguration {
 
         return http.csrf().disable().cors().disable()
                 .authorizeHttpRequests(auth -> auth
-                        .anyRequest().hasAuthority("ADMIN"))
+                        .anyRequest().authenticated())
                 .formLogin((form) -> form
                         .usernameParameter("username")
                         .passwordParameter("password")

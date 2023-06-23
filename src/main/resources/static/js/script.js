@@ -19,7 +19,7 @@ else if (errorMsg.textContent != '') {
 getClientButton.addEventListener('click', showMeResponseBlock);
 
 function showMeResponseBlock() {
-    if (inputId.value != null) {
+    if (inputId.value != '') {
         responseBlock.style.display = 'initial';
     }
 }
