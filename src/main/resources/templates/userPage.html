@@ -90,7 +90,7 @@
                     </div>
                 </div>
 
-                <form method="post" action="/client/update" th:object="${client}">
+
 <!--                    <div id="updateClientBlock" class="titleBlock">Перевод</div>-->
                     <div class="form-floating">
                         <input type="number" class="form-control" id="idAccountSender" name="sender" placeholder="Sender" required>
@@ -104,8 +104,11 @@
                         <input type="number" class="form-control" id="sumForPayment" name="sumForPayment" placeholder="Sum" required>
                         <label for="sumForPayment">Сумма перевода</label>
                     </div>
-                    <button id="transferButton" type="submit" class="btn btn-secondary">Перечислить</button>
-                </form>
+                    <div style="text-align: center;">
+                        <button id="transferButton" type="submit" class="btn btn-secondary">Перечислить</button>
+                    </div>
+<!--
+
         </div>
     </div>
 

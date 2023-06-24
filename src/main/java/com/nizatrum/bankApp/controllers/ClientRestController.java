@@ -1,31 +1,26 @@
 package com.nizatrum.bankApp.controllers;
 
 import com.nizatrum.bankApp.models.Client;
+import com.nizatrum.bankApp.models.MessageDTO;
 import com.nizatrum.bankApp.services.ClientService;
+import com.nizatrum.bankApp.services.TransferService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 @Slf4j
 @RestController
 public class ClientRestController {
     @Autowired
     private ClientService clientService;
+    @Autowired
+    private TransferService transferService;
     @GetMapping("/getClient")
     public Client getClient(@RequestParam Long id) {
         return clientService.getClient(id);
     }
 
-//    @GetMapping("/getCurrentUser")
-//    public Client getCurrentUser(Authentication authentication) {
-//        log.info("Получить получить текущего пользователя");
-//        System.out.println(authentication);
-//        return clientService.getClientByEmail(authentication.getPrincipal().toString());
-//    }
     @GetMapping("/getCurrentUser")
     public Client getCurrentUser(Authentication authentication) {
         log.info("Получить получить текущего пользователя");
@@ -33,8 +28,19 @@ public class ClientRestController {
         return clientService.getClientByUsername(authentication.getPrincipal().toString());
     }
 
+    //Принимаем отдельные данные с фронта
     @PostMapping("/executeTransfer")
-    public void executeTransfer(@RequestParam Long idAccountSender, @RequestParam Long idAccountRecipient, @RequestParam Double sum) {
-
+    public MessageDTO executeTransfer(Authentication authentication, @RequestParam Long idAccountSender, @RequestParam Long idAccountRecipient, @RequestParam Double sumForPayment) {
+        try {
+            transferService.execute(authentication, idAccountSender, idAccountRecipient, sumForPayment);
+            return new MessageDTO("Успешно!", true);
+        } catch (Exception e) {
+            return new MessageDTO("Ошибка: " + e.getMessage(), false);
+        }
     }
+    //Принимаем с фронта объект целиком DTO с нужными нам данными внутри
+//    @PostMapping("/executeTransfer")
+//    public void executeTransfer(@RequestBody TransferDTO transferDTO) {
+//        System.out.println(transferDTO);
+//    }
 }
