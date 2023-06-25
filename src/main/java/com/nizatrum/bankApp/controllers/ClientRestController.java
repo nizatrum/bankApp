@@ -33,7 +33,7 @@ public class ClientRestController {
     public MessageDTO executeTransfer(Authentication authentication, @RequestParam Long idAccountSender, @RequestParam Long idAccountRecipient, @RequestParam Double sumForPayment) {
         try {
             transferService.execute(authentication, idAccountSender, idAccountRecipient, sumForPayment);
-            return new MessageDTO("Успешно!", true);
+            return new MessageDTO("Успешно! Перевод выполнен", true);
         } catch (Exception e) {
             return new MessageDTO("Ошибка: " + e.getMessage(), false);
         }

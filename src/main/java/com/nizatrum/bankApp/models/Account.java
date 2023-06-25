@@ -9,7 +9,6 @@ import lombok.Setter;
 import lombok.ToString;
 
 @Entity
-@Setter
 @Getter
 @ToString
 public class Account {
@@ -18,4 +17,19 @@ public class Account {
     private Long id;
     private String name;
     private double balance;
+
+    public Account() {
+
+    }
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void setBalance(double balance) {
+        this.balance = Math.round(balance * 100.0) / 100.0;
+    }
+    public Account(String name, double balance) {
+        this.name = name;
+        this.balance = balance;
+    }
 }

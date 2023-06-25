@@ -1,31 +1,48 @@
-//-------------------------------------------------------------------------- 1 - заполнение профиля информацией клиента
-
 let currentUser = JSON.parse(sendRequest('GET', '/getCurrentUser', null));
+getBasicDataProfile();
+getAccountsProfile();
 
-let profileEmail = document.getElementById('profileEmail');
-let profileName = document.getElementById('profileName');
-let profileSurname = document.getElementById('profileSurname');
-let profilePatronymic = document.getElementById('profilePatronymic');
-//--------------------------------------------------------------------------
-//-------------------------------------------------------------------------- 2 - заполнение имеющихся счетов у клиента
-let accountsCurrentClient = currentUser.accounts;
-let accountsClient = document.getElementById('accountsClient');
-
-for (let i = 0; i < accountsCurrentClient.length; i++) {
-    var account = JSON.stringify(accountsCurrentClient[i]);
-    accountsClient.innerHTML += "<li class='list-group-item'>" + JSON.parse(account).name + " [" + JSON.parse(account).balance + "]</li>";
+//1 - заполнение профиля информацией клиента
+function getBasicDataProfile() {
+    let profileEmail = document.getElementById('profileEmail');
+    let profileName = document.getElementById('profileName');
+    let profileSurname = document.getElementById('profileSurname');
+    let profilePatronymic = document.getElementById('profilePatronymic');
+    profileEmail.innerHTML += currentUser.email;
+    profileName.innerHTML += currentUser.name;
+    profileSurname.innerHTML += currentUser.surname;
+    profilePatronymic.innerHTML += currentUser.patronymic;
 }
 
-profileEmail.innerHTML += currentUser.email;
-profileName.innerHTML += currentUser.name;
-profileSurname.innerHTML += currentUser.surname;
-profilePatronymic.innerHTML += currentUser.patronymic;
-//--------------------------------------------------------------------------
-//-------------------------------------------------------------------------- 3 - выполнение перевода
-let transferButton = document.getElementById('transferButton');
+//2 - заполнение имеющихся счетов у клиента
+function getAccountsProfile() {
+    let accountsCurrentClient = currentUser.accounts;
+    let accountsClient = document.getElementById('accountsClient');
+    let accounts = accountsClient.querySelectorAll('li'); //список <li> внутри <ul id='accountsClient'>
+    //если у нас уже подгружены аккаунты
+    if (accounts.length > 0) {
 
+        let updateCurrentUser = JSON.parse(sendRequest('GET', '/getCurrentUser', null)); //обновляем инфу по аккаунтам у текущего юзера
+        let accountsCurrentClientAfter = updateCurrentUser.accounts;
+        for (var i = 0; i < accountsCurrentClientAfter.length; i++) {
+             var account = JSON.stringify(accountsCurrentClientAfter[i]);
+             accounts[i].textContent = JSON.parse(account).id + ". " + JSON.parse(account).name + " Баланс: " + JSON.parse(account).balance;
+        }
+    }
+    if (accounts.length == 0) {
+        for (let i = 0; i < accountsCurrentClient.length; i++) {
+            var account = JSON.stringify(accountsCurrentClient[i]);
+            accountsClient.innerHTML += "<li class='list-group-item'>" + JSON.parse(account).id + ". " + JSON.parse(account).name + " Баланс: " + JSON.parse(account).balance + "</li>";
+        }
+    }
+}
+
+//3 - выполнение перевода
+let transferButton = document.getElementById('transferButton');
 transferButton.addEventListener('click', transfer);
 
+
+//метода перевод средств
 function transfer() {
     //для передачи в тело POST запроса отдельных параметров
     let idAccountSender = document.getElementById('idAccountSender');
@@ -41,17 +58,34 @@ function transfer() {
     };
     //
     if (idAccountSender.value != '' && idAccountRecipient != '' && sumForPayment.value != '' && !dto) {
-        sendRequest('POST', '/executeTransfer', 'idAccountSender=' + encodeURIComponent(idAccountSender.value) +
+        status = sendRequest('POST', '/executeTransfer', 'idAccountSender=' + encodeURIComponent(idAccountSender.value) +
                                                 '&idAccountRecipient=' + encodeURIComponent(idAccountRecipient.value) +
                                                 '&sumForPayment=' + encodeURIComponent(sumForPayment.value));
+        let infoMessage = document.getElementById('infoMessage');
+        infoMessage.innerHTML = JSON.parse(status).message;
+        if (JSON.parse(status).success) {
+            infoMessage.style.color = 'green';
+            getAccountsProfile();
+            //getCurrentUserTransactions();
+        } else {
+            infoMessage.style.color = 'red';
+        }
+
+        if (infoMessage.textContent != '') {
+            responseBlock.style.display = 'initial';
+            infoMessage.style.display = '';
+        }
     }
-    else if (idAccountSender.value != '' && idAccountRecipient != '' && sumForPayment.value != '' && dto) {
-        sendRequest('POST', '/executeTransfer', JSON.stringify(transferDTO));
-    }
+    /*else if (idAccountSender.value != '' && idAccountRecipient != '' && sumForPayment.value != '' && dto) {
+        status = sendRequest('POST', '/executeTransfer', JSON.stringify(transferDTO));
+    }*/
 }
 
 
 
+
+
+//отправка запроса(метод, адрес, тело)
 function sendRequest(method, mapping, data) {
     var xhr = new XMLHttpRequest();
     xhr.open(method, mapping, false);

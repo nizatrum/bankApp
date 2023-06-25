@@ -213,3 +213,7 @@ input::placeholder {
 .form-control {
     width: 300pt;
 }
+
+#infoMessage {
+    padding: 8px 16px;
+}

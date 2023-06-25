@@ -18,8 +18,7 @@ public class AccountService {
     @Autowired
     private ClientRepository clientRepository;
     public boolean createAccount(Long clientId) {
-        Account account = new Account();
-        account.setBalance(0);
+        Account account = new Account("наименование счета или номер", 1000);
 
         Optional<Client> clientForEdit = clientRepository.findById(clientId);
         if (clientForEdit.isPresent()) {

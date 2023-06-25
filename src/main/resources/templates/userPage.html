@@ -107,47 +107,18 @@
                     <div style="text-align: center;">
                         <button id="transferButton" type="submit" class="btn btn-secondary">Перечислить</button>
                     </div>
-<!--
-
-        </div>
-    </div>
-
-    <div id="responseBlock">
-        <div class="list-group-item list-group-item-action active" aria-current="true">
-            Блок информативных сообщений
-        </div>
-        <div id="responseContent">
-            <div id="errorMsg" th:text="${msg}"></div>
-            <div id="infoClient">
-                <div class="dataClient">
-                    <div>Id: </div>
-                    <div id="idField" th:text="${client?.id}"></div>
-                </div>
-                <div class="dataClient">
-                    <div>Email: </div>
-                    <div id="emailField" th:text="${client?.email}"></div>
-                </div>
-                <div class="dataClient">
-                    <div>Логин: </div>
-                    <div id="usernameField" th:text="${client?.username}"></div>
-                </div>
-                <div class="dataClient">
-                    <div>Имя: </div>
-                    <div id="nameField" th:text="${client?.name}"></div>
-                </div>
-                <div class="dataClient">
-                    <div>Фамилия: </div>
-                    <div id="surnameField" th:text="${client?.surname}"></div>
-                </div>
-                <div class="dataClient">
-                    <div>Отчество: </div>
-                    <div id="patronymicField" th:text="${client?.patronymic}"></div>
-                </div>
-            </div>
         </div>
     </div>
     </div>
 </main>
+<div id="responseBlock">
+    <div class="list-group-item list-group-item-action active" aria-current="true">
+        Блок информативных сообщений
+    </div>
+    <div id="responseContent">
+        <div id="infoMessage"></div>
+    </div>
+</div>
 <footer>
     <div id="footer" class="list-group-item list-group-item-action active" aria-current="true">
         Контактная информация
