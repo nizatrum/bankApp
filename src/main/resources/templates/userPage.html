@@ -59,11 +59,10 @@
                     <div class="card-header">
                         CЧЕТА:
                     </div>
-<!--                    <div id="accountsClient" class="list-group list-group-flush"></div>-->
-                    <ul id="accountsClient" class="list-group list-group-flush">
-<!--                        <li class="list-group-item"></li>-->
-
-                    </ul>
+                    <div class="needScroll">
+                        <ul id="accountsClient" class="list-group list-group-flush">
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
@@ -74,24 +73,20 @@
                     <div class="card-header">
                         ИСТОРИЯ:
                     </div>
-                    <ul class="list-group list-group-flush">
-                        <li class="list-group-item">****-5341 -> **** - 1231</li>
-                    </ul>
+                    <div class="needScroll">
+                        <ul id="transactionsList" class="list-group list-group-flush">
+                        </ul>
+                    </div>
                 </div>
             </div>
         </div>
         <div class="fragmentForInputs">
             <div class="innerOptionsBlock">
-
-<!--                <div id="transaction" class="card" style="width: 100%">-->
                 <div id="transaction" class="card">
                     <div class="card-header">
                         ПЕРЕВОД:
                     </div>
                 </div>
-
-
-<!--                    <div id="updateClientBlock" class="titleBlock">Перевод</div>-->
                     <div class="form-floating">
                         <input type="number" class="form-control" id="idAccountSender" name="sender" placeholder="Sender" required>
                         <label for="idAccountSender">Id счета списания</label>
@@ -107,8 +102,8 @@
                     <div style="text-align: center;">
                         <button id="transferButton" type="submit" class="btn btn-secondary">Перечислить</button>
                     </div>
+            </div>
         </div>
-    </div>
     </div>
 </main>
 <div id="responseBlock">

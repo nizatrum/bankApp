@@ -1,5 +1,6 @@
 package com.nizatrum.bankApp.models;
 
+import com.nizatrum.bankApp.services.TransactionService;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
@@ -21,6 +22,10 @@ public class Transaction {
         this.recipient = recipient;
         this.valueOfPayment = valueOfPayment;
         this.dateOfPayment = dateOfPayment;
+    }
+
+    public Transaction() {
+
     }
 
     @Id

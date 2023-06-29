@@ -2,12 +2,16 @@ package com.nizatrum.bankApp.controllers;
 
 import com.nizatrum.bankApp.models.Client;
 import com.nizatrum.bankApp.models.MessageDTO;
+import com.nizatrum.bankApp.models.Transaction;
 import com.nizatrum.bankApp.services.ClientService;
+import com.nizatrum.bankApp.services.TransactionService;
 import com.nizatrum.bankApp.services.TransferService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
 
 @Slf4j
 @RestController
@@ -16,6 +20,8 @@ public class ClientRestController {
     private ClientService clientService;
     @Autowired
     private TransferService transferService;
+    @Autowired
+    private TransactionService transactionService;
     @GetMapping("/getClient")
     public Client getClient(@RequestParam Long id) {
         return clientService.getClient(id);
@@ -37,6 +43,12 @@ public class ClientRestController {
         } catch (Exception e) {
             return new MessageDTO("Ошибка: " + e.getMessage(), false);
         }
+    }
+
+    @GetMapping("/getTransaction")
+    public List<Transaction> getTransaction(Authentication authentication) {
+        return transactionService.getTransactions(authentication.getPrincipal().toString());
+
     }
     //Принимаем с фронта объект целиком DTO с нужными нам данными внутри
 //    @PostMapping("/executeTransfer")
