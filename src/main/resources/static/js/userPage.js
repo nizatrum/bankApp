@@ -40,20 +40,24 @@ function getAccountsProfile() {
         //добавляем стили для аккаунтов, а именно добавляем скролл
         if (count >= 4) {
             divsNeedScrolls[0].style.height = '164px';
-            divsNeedScrolls[0].style.overflow = 'scroll';
+            divsNeedScrolls[0].style.overflow = 'auto';
         }
     }
     else if (accounts.length == 0) {
         var count = 0;
         for (let i = 0; i < accountsCurrentClient.length; i++) {
             var account = JSON.stringify(accountsCurrentClient[i]);
-            accountsClient.innerHTML += "<li class='list-group-item'>" + JSON.parse(account).id + ". " + JSON.parse(account).name + " Баланс: " + JSON.parse(account).balance + "</li>";
+            accountsClient.innerHTML +=
+            "<li class='list-group-item'>"
+            + JSON.parse(account).id + ". "
+            + JSON.parse(account).name + " Баланс: "
+            + JSON.parse(account).balance + "</li>";
             count++;
         }
         //добавляем стили для аккаунтов, а именно добавляем скролл
         if (count >= 4) {
             divsNeedScrolls[0].style.height = '164px';
-            divsNeedScrolls[0].style.overflow = 'scroll';
+            divsNeedScrolls[0].style.overflow = 'auto';
         }
     }
 }
@@ -129,7 +133,7 @@ function getTransactionsProfile() {
 //добавляем стили для истории транзакций, а именно добавляем скролл
     if (transactions.length >= 4) {
         divsNeedScrolls[1].style.height = '164px';
-        divsNeedScrolls[1].style.overflow = 'scroll';
+        divsNeedScrolls[1].style.overflow = 'auto';
     }
     }
 //white-space: nowrap - перенос на строку дальше

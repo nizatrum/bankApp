@@ -44,17 +44,18 @@ public class ClientService {
         }
         client.setAccounts(new ArrayList<>());
         client.setPassword(passwordEncoder.encode(client.getPassword()));
-        client.setRole(roleRepository.findBySystemName("ROLE_USER"));
+        client.setRole(roleRepository.findBySystemName("USER"));
         clientRepository.save(client);
         log.info("client с id " + client.getId() + " успешно создан");
     }
-    public Client getClient(Long id) {
+    public Optional<Client> getClient(Long id) {
         Optional<Client> client = clientRepository.findById(id);
         if (client.isPresent()) {
-            return client.get();
-        } else {
-            throw new IllegalArgumentException("отсутствует в БД");
+            client.get().setPassword("****");
+            client.get().setUsername("****");
+            client.get().setEmail("****");
         }
+        return client;
     }
     public boolean updateClient(Client client) {
         Client clientForChange = clientRepository.findById(client.getId()).get();

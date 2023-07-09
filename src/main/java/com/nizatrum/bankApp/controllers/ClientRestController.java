@@ -1,5 +1,6 @@
 package com.nizatrum.bankApp.controllers;
 
+import com.nizatrum.bankApp.models.AppError;
 import com.nizatrum.bankApp.models.Client;
 import com.nizatrum.bankApp.models.MessageDTO;
 import com.nizatrum.bankApp.models.Transaction;
@@ -8,6 +9,8 @@ import com.nizatrum.bankApp.services.TransactionService;
 import com.nizatrum.bankApp.services.TransferService;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.*;
 
@@ -23,10 +26,16 @@ public class ClientRestController {
     @Autowired
     private TransactionService transactionService;
     @GetMapping("/getClient")
-    public Client getClient(@RequestParam Long id) {
-        return clientService.getClient(id);
+    public ResponseEntity<?> getClient(@RequestParam Long id) {
+        try {
+            Client client = clientService.getClient(id).orElseThrow();
+            return new ResponseEntity<>(client, HttpStatus.OK);
+        } catch (Exception e){
+            return new ResponseEntity<>(new AppError(HttpStatus.NOT_FOUND.value(),
+                    "Client with id " + id + "not found"),
+                    HttpStatus.NOT_FOUND);
+        }
     }
-
     @GetMapping("/getCurrentUser")
     public Client getCurrentUser(Authentication authentication) {
         log.info("Получить получить текущего пользователя");
@@ -35,6 +44,7 @@ public class ClientRestController {
     }
 
     //Принимаем отдельные данные с фронта
+
     @PostMapping("/executeTransfer")
     public MessageDTO executeTransfer(Authentication authentication, @RequestParam Long idAccountSender, @RequestParam Long idAccountRecipient, @RequestParam Double sumForPayment) {
         try {
@@ -48,7 +58,6 @@ public class ClientRestController {
     @GetMapping("/getTransaction")
     public List<Transaction> getTransaction(Authentication authentication) {
         return transactionService.getTransactions(authentication.getPrincipal().toString());
-
     }
     //Принимаем с фронта объект целиком DTO с нужными нам данными внутри
 //    @PostMapping("/executeTransfer")

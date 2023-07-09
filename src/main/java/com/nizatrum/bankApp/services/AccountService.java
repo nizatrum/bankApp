@@ -8,7 +8,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
+
+import static com.nizatrum.bankApp.services.validation.Validation.validateAccountName;
 
 
 @Service
@@ -17,18 +20,23 @@ public class AccountService {
     private AccountRepository accountRepository;
     @Autowired
     private ClientRepository clientRepository;
-    public boolean createAccount(Long clientId) {
-        Account account = new Account("наименование счета или номер", 1000);
-
-        Optional<Client> clientForEdit = clientRepository.findById(clientId);
-        if (clientForEdit.isPresent()) {
-            account.setName("Счет " + clientForEdit.get().getName());
-            accountRepository.save(account);
-            clientForEdit.get().getAccounts().add(accountRepository.findTopByOrderByIdDesc());
-            clientRepository.save(clientForEdit.get());
-            return true;
+    public void createAccount(Long clientId, String nameAccount) {
+        System.out.println(clientId);
+        System.out.println(nameAccount);
+        Optional<Client> clientOwner = clientRepository.findById(clientId);
+        if (clientOwner.isPresent()) {
+            if (validateAccountName(nameAccount)) {
+                Account account = new Account(nameAccount, 0);
+                accountRepository.save(account);
+//            clientOwner.get().getAccounts().add(accountRepository.findTopByOrderByIdDesc());
+                clientOwner.get().getAccounts().add(accountRepository.findById(account.getId()).get());
+                clientRepository.save(clientOwner.get());
+            } else {
+                throw new IllegalArgumentException("Некорректный номер счета");
+            }
+        } else {
+            throw new NoSuchElementException("Пользователя не существует или указанный Id - некорректный");
         }
-        return false;
     }
     public Optional<Account> getAccount(Long id) {
         return accountRepository.findById(id);

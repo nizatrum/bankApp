@@ -32,18 +32,18 @@ public class ClientController {
         } catch (Exception e) {
             model.addFlashAttribute("msg", "Пользователь не может быть создан, так как " + e.getMessage());
         }
-        return new ModelAndView("redirect:/client");
+        return new ModelAndView("redirect:/adminPage/client");
     }
 
     @GetMapping("/get")
     public ModelAndView get(@RequestParam Long id, RedirectAttributes model) {
-        try {
-            Client client = clientService.getClient(id);
-            model.addFlashAttribute("client", client);
-        } catch (Exception e) {
-            model.addFlashAttribute("msg", "Клиент с id " + id + " " + e.getMessage());
+        Optional<Client> client = clientService.getClient(id);
+        if (client.isPresent()) {
+            model.addFlashAttribute("client", client.get());
+        } else {
+            model.addFlashAttribute("msg", "Клиент с id " + id + " отсутствует в БД");
         }
-        return new ModelAndView("redirect:/client");
+        return new ModelAndView("redirect:/adminPage/client");
     }
 
     @PostMapping("/update")
@@ -53,7 +53,7 @@ public class ClientController {
         } else {
             model.addFlashAttribute("msg", "Не удалось обновить пользователя");
         }
-        return new ModelAndView("redirect:/client");
+        return new ModelAndView("redirect:/adminPage/client");
     }
 
     @PostMapping("/delete")
@@ -61,8 +61,8 @@ public class ClientController {
         if (clientService.deleteClient(id)) {
             model.addFlashAttribute("msg", "Пользователь c id " + id.toString() + " успешно удален");
         } else {
-            model.addFlashAttribute("msg", "Не удалось удалить пользователя");
+            model.addFlashAttribute("msg", "Пользователя не существует");
         }
-        return new ModelAndView("redirect:/client");
+        return new ModelAndView("redirect:/adminPage/client");
     }
 }

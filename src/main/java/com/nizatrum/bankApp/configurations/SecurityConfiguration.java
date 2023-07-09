@@ -38,11 +38,15 @@ public class SecurityConfiguration {
 
         return http.csrf().disable().cors().disable()
                 .authorizeHttpRequests(auth -> auth
+                        .requestMatchers("/login/**", "/css/**", "/js/**").permitAll()
+                        .requestMatchers("/client", "/account").hasAuthority("ADMIN")
                         .anyRequest().authenticated())
                 .formLogin((form) -> form
                         .usernameParameter("username")
                         .passwordParameter("password")
                         .permitAll())
+                .exceptionHandling().accessDeniedPage("/accessDenied")
+                .and()
                 .build();
     }
 }
