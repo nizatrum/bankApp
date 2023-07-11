@@ -23,24 +23,30 @@ public class ClientService {
     private PasswordEncoder passwordEncoder;
 
     public void createClient(Client client) throws Exception {
+        if (clientRepository.findByUsername(client.getUsername()).isPresent()) {
+            throw new IllegalArgumentException("Логин уже существует");
+        }
+        if (clientRepository.findByEmail(client.getEmail()).isPresent()) {
+            throw new IllegalArgumentException(" пользователь уже регистрировался с указанным Email");
+        }
         log.info("Запуск процесса создания client c id " + client.getId());
         if (StringUtils.isEmptyOrWhitespace(client.getEmail())) {
             throw new IllegalArgumentException("поле Email должно содержать корректное значение");
         }
         if (StringUtils.isEmptyOrWhitespace(client.getUsername())) {
-            throw new IllegalArgumentException("поле Username должно содержать корректное значение");
+            throw new IllegalArgumentException("поле Логин должно содержать корректное значение");
         }
         if (StringUtils.isEmptyOrWhitespace(client.getPassword())) {
-            throw new IllegalArgumentException("поле Password должно содержать корректное значение");
+            throw new IllegalArgumentException("поле Пароль должно содержать корректное значение");
         }
         if (StringUtils.isEmptyOrWhitespace(client.getName())) {
-            throw new IllegalArgumentException("поле Name должно содержать корректное значение");
+            throw new IllegalArgumentException("поле Имя должно содержать корректное значение");
         }
         if (StringUtils.isEmptyOrWhitespace(client.getSurname())) {
-            throw new IllegalArgumentException("поле Surname должно содержать корректное значение");
+            throw new IllegalArgumentException("поле Фамилия должно содержать корректное значение");
         }
         if (StringUtils.isEmptyOrWhitespace(client.getPatronymic())) {
-            throw new IllegalArgumentException("поле Patronymic должно содержать корректное значение");
+            throw new IllegalArgumentException("поле Отчество должно содержать корректное значение");
         }
         client.setAccounts(new ArrayList<>());
         client.setPassword(passwordEncoder.encode(client.getPassword()));
