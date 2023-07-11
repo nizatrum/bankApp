@@ -239,3 +239,25 @@ input::placeholder {
     padding-top: 10px;
     padding-bottom: 10px;
 }
+#titleLogin {
+    text-align: center;
+    margin-top: 50px
+}
+#btnLogin {
+    width: 100px;
+    text-align: center;
+}
+#loginForm {
+    padding-top: 20px;
+    width: 300px;
+    margin: auto;
+    text-align: center;
+}
+#formMain {
+    display: flex;
+    flex-direction: column;
+}
+
+.inputs-login-main {
+    width: 100%;
+}
