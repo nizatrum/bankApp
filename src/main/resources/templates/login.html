@@ -27,7 +27,7 @@
         <p th:if="${param.logout}" class="error" style="color: #f4b022">Вы вышли из системы</p>
         <form id="formMain" th:action="@{/login}" method="post">
             <div class="form-floating">
-                <input type="text" class="form-control inputs-login-main" id="username" name="username" placeholder="Username" required>
+                <input type="text" class="form-control inputs-login-main" id="username" name="username" placeholder="Username" autofocus required>
                 <label for="username">Логин</label>
             </div>
             <div class="form-floating">

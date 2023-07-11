@@ -21,8 +21,9 @@ public class AccountService {
     @Autowired
     private ClientRepository clientRepository;
     public void createAccount(Long clientId, String nameAccount) {
-        System.out.println(clientId);
-        System.out.println(nameAccount);
+        if (accountRepository.findByName(nameAccount).isPresent()) {
+            throw new IllegalArgumentException("Клиент с указанный счетом уже существует");
+        }
         Optional<Client> clientOwner = clientRepository.findById(clientId);
         if (clientOwner.isPresent()) {
             if (validateAccountName(nameAccount)) {
