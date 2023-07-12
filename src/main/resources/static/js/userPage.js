@@ -173,10 +173,9 @@ function transfer() {
             responseBlock.style.display = 'initial';
             infoMessage.style.display = '';
         }
+    } else {
+        alert('Необходимо заполнить поля');
     }
-    /*else if (idAccountSender.value != '' && idAccountRecipient != '' && sumForPayment.value != '' && dto) {
-        status = sendRequest('POST', '/executeTransfer', JSON.stringify(transferDTO));
-    }*/
 }
 
 //отправка запроса(метод, адрес, тело)

@@ -23,41 +23,6 @@ function showMeResponseBlock() {
         responseBlock.style.display = 'initial';
     }
 }
-//------------------------------------------------------------------------------------------------------------------
-//------------------------------------------------------------------------------------------------------------------
-//let previewButton = document.getElementById('previewButton');
-//previewButton.addEventListener('click', showMeClientForUpdate);
-//
-//function showMeClientForUpdate(e) {
-//    let updateId = document.getElementById('updateId').value;
-//    var xhr = new XMLHttpRequest();
-//    xhr.open('GET', '/getClient?id=' + updateId, false);
-//    xhr.send();
-//        if (xhr.status == 200) {
-//            updateName.value = '';
-//            updateSurname.value = '';
-//            updatePatronymic.value = '';
-//            let client = JSON.parse(xhr.responseText);
-//            updateName.disabled = false;
-//            updateSurname.disabled = false;
-//            updatePatronymic.disabled = false;
-//            updateButton.disabled = false;
-//
-//            updateName.value = client.name;
-//            updateSurname.value = client.surname;
-//            updatePatronymic.value = client.patronymic;
-//        } else {
-//            updateName.value = '';
-//            updateSurname.value = '';
-//            updatePatronymic.value = '';
-//
-//            updateName.disabled = true;
-//            updateSurname.disabled = true;
-//            updatePatronymic.disabled = true;
-//            clientForUpdatingButton.disabled = true;
-//        }
-//}
-
 
 //------------------------------------------------------------------------------------------------------------------
 let updateId = document.getElementById('updateId');

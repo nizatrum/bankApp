@@ -1,7 +1,6 @@
 package com.nizatrum.bankApp.services;
 
 import com.nizatrum.bankApp.models.Account;
-import com.nizatrum.bankApp.models.Client;
 import com.nizatrum.bankApp.models.Transaction;
 import com.nizatrum.bankApp.repositories.ClientRepository;
 import com.nizatrum.bankApp.repositories.TransactionRepository;

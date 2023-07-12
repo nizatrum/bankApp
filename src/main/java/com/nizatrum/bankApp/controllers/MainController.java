@@ -1,7 +1,5 @@
 package com.nizatrum.bankApp.controllers;
 
-
-import com.nizatrum.bankApp.models.Client;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;

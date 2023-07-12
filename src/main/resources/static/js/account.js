@@ -40,7 +40,7 @@ btnGetTransactions.addEventListener('click', getTransactions);
 
 function createAccount() {
     if (clientIdForAccount.value != '') {
-        if (nameAccount.value != '') {
+        if (!nameAccount.value.includes('_')) {
             var response = sendRequest('POST',
                                         '/createAccount',
                                         'clientId=' + encodeURIComponent(clientIdForAccount.value) +
@@ -52,7 +52,11 @@ function createAccount() {
             } else {
                infoMsg.style.color = "red";
             }
+        } else {
+            alert('Поле "Номер счета" не заполнено или не полное');
         }
+    } else {
+        alert('Заполните поле "Id клиента"');
     }
 }
 
@@ -77,34 +81,15 @@ function getAccounts() {
                 infoMsg.innerHTML += 'Аккаунты отсутствуют';
             }
         } else {
+            document.getElementById('responseBlock').style.display = 'initial';
             infoMsg.style.color = 'red';
             infoMsg.innerHTML = 'Указанный пользователь не найден';
         }
     }
     else {
-        alert('Заполните форму');
+        alert('Заполните поле');
     }
 }
-//отправка запроса(метод, адрес, тело)
-//function sendRequest(method, mapping, data) {
-//    var xhr = new XMLHttpRequest();
-//    xhr.open(method, mapping, false);
-//
-//    if (method == 'POST' && data != null) {
-//        // Если используем классический вариант передачи данных через POST запрос
-//        xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
-//        // Если используем DTO в POST запросе
-//        //xhr.setRequestHeader('Content-Type', 'application/json;charset=UTF-8');
-//        xhr.send(data);
-//    } else {
-//        xhr.send();
-//    }
-//    if (xhr.status == 200) {
-//        return xhr.responseText;
-//    } else {
-//        console.log(xhr.status)
-//    }
-//}
 
 function getTransactions() {
     if (idClientForTransactions.value != '') {
@@ -122,12 +107,18 @@ function getTransactions() {
                         + ' сумму, в размере ' + transactions[i].valueOfPayment + '<br>';
                 }
             } else {
+                infoMsg.style.color = 'gray';
                 infoMsg.innerHTML = 'Транзакции отсутствуют';
             }
         } else {
+            document.getElementById('responseBlock').style.display = 'initial';
+            infoMsg.style.color = 'red';
             infoMsg.innerHTML = 'Указанный пользователь не найден';
         }
+    } else {
+        alert('Заполните поле');
     }
+
 }
 
 function sendRequest(method, mapping, data) {

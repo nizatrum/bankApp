@@ -58,8 +58,6 @@ public class ClientService {
         Optional<Client> client = clientRepository.findById(id);
         if (client.isPresent()) {
             client.get().setPassword("****");
-            client.get().setUsername("****");
-            client.get().setEmail("****");
         }
         return client;
     }
